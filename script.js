@@ -66,6 +66,14 @@ const gameBoard = (() => {
 let currentMarker = "X";
 
 gameBoard.displayBoard();
+
+const createPlayers = () => {
+    const player1 = document.getElementById('player1').value;
+    console.log(player(player1, "X"));
+    const player2 = document.getElementById('player2').value;
+    console.log(player(player2, "O"));
+}
+
 const player = (name, marker) => {
 
     return {name, marker};
