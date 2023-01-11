@@ -18,7 +18,8 @@ body {
     grid-template-rows: 1fr 1fr 1fr;
     justify-items: center;
     align-items: center;
-    border: 2px dashed black
+    border: 2px dashed black;
+    font-size: 32px;
 }
 
 #player-input{
