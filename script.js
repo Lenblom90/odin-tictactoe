@@ -31,11 +31,15 @@ const gameBoard = (() => {
         if(board[e.target.dataset.index] === " "){
             e.target.textContent = `[${marker}]`;
             board[e.target.dataset.index] = marker;
-            currentMarker = currentMarker === "X" ? "O" : "X";    
             let gameOver = _checkBoard(board);
             if(gameOver){
+                currentMarker === "X";
                 console.log("Game over");
             } else {
+                currentMarker = currentMarker === "X" ? "O" : "X";    
+                if(currentMarker === "O"){
+                    _computerTurn();
+                }
                 console.log(`Player ${currentMarker === "X" ? "X" : "O" }'s turn`);
             }
         } else {
@@ -43,13 +47,37 @@ const gameBoard = (() => {
         }
     }
 
+    const _computerTurn = () => {
+        let i = Math.round(Math.random() * 9);
+        let done = false;
+        while(!done){
+            if(board[i] === " "){
+                board[i] = "O";
+                document.getElementById('gameBoard').children[i].textContent = '[O]';
+                done = true;
+            } else if (board.includes(" ")){
+                i = Math.round(Math.random() * 9);
+                done = false;
+            } else {
+                done = true;
+            }
+        }
+        let gameOver = _checkBoard(board);
+        if(gameOver){
+            currentMarker = "X";
+            console.log("Game over")
+        } else {
+            currentMarker = currentMarker === "X" ? "O" : "X";    
+            if(currentMarker === "O"){
+                _computerTurn();
+            }
+            console.log(`Player ${currentMarker === "X" ? "X" : "O" }'s turn`);
+        }
+    }
+
     const _checkBoard = (board) => {
         const message = document.getElementById('gameMessage');
         
-        if(!board.includes(" ")){
-            message.textContent = "It's a tie!" ;
-            return true;
-        }
         let i = 0;
         while(i<9){
             if(board[i] !== " "){
@@ -79,6 +107,10 @@ const gameBoard = (() => {
                 }
             }
             i++;
+        }
+        if(!board.includes(" ")){
+            message.textContent = "It's a tie!" ;
+            return true;
         }
         return false;
     }
